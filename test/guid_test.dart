@@ -21,6 +21,40 @@ void main() {
 
       expect(areEqual, false);
     });
+
+    test("Hashcodes for GUIDs with the same value should be the same", () {
+      final guidAlpha = new Guid("ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9");
+      final guidBeta = new Guid("ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9");
+
+      expect(guidAlpha.hashCode, guidBeta.hashCode);
+    });
+
+     test("GUID value casing should not affect hashcodes", () {
+      final guidAlpha = new Guid("ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9");
+      final guidBeta = new Guid("AC3FA00F-8F5B-4E93-B7A5-2EE3051A12B9");
+
+      expect(guidAlpha.hashCode, guidBeta.hashCode);
+    });
+
+    test("Hashcodes for GUIDs with different values should be different", () {
+      final guidAlpha = new Guid("ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9");
+      final guidBeta = new Guid("f841928c-5393-4c6e-9b22-85de1fcf317a");
+
+      expect(guidAlpha.hashCode != guidBeta.hashCode, true);
+    });
+
+    test("Separate GUIDs with the same underlying value should point to the same Map value", () {
+      final guidValue = "ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9";
+      final guidAlpha = Guid(guidValue);
+      final guidBeta = Guid(guidValue);
+
+      final Map<Guid, int> map = <Guid, int>{
+        guidAlpha: 2
+      };
+
+      expect(map.containsKey(guidAlpha), true);
+      expect(map.containsKey(guidBeta), true);
+    });
   });
 
   group("Validity Tests", () {

@@ -66,7 +66,7 @@ class Guid {
   /// Returns the hashCode.
   @override
   int get hashCode {
-    return super.hashCode;
+    return UuidValue.fromList(Uuid.parse(value)).hashCode;
   }
 
   /// Gets the UUID value contained by the Guid object as a string.
