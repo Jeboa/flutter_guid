@@ -18,7 +18,6 @@ class Guid {
 
   /// Constructor, expects a valid UUID and will throw an exception if the value provided is invalid.
   Guid(String? v) {
-    _failIfNotValidGuid(v);
     _value = v;
   }
 
@@ -40,7 +39,7 @@ class Guid {
 
   _failIfNotValidGuid(String? v) {
     if (v == null || v.isEmpty) {
-      v = _defaultGuid;
+      v = null;
     }
     final isInvalid = isUUID(v) == false;
     if (isInvalid) {
