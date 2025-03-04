@@ -38,6 +38,17 @@ class Guid {
     }
   }
 
+  static Guid parse<T extends String>(T json) {
+    return Guid(json.toString());
+  }
+
+  static Guid? tryParse(String? json) {
+    if (json == null) {
+      return null;
+    }
+    return Guid(json.toString());
+  }
+
   _failIfNotValidGuid(String? v) {
     if (v == null || v.isEmpty) {
       throw new FlutterGuidError("Value '$v' is not a valid UUID");
