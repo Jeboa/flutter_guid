@@ -17,7 +17,8 @@ class Guid {
   Guid.generate() : this(Guid.newGuid.value);
 
   /// Constructor, expects a valid UUID and will throw an exception if the value provided is invalid.
-  Guid(String? v) {
+  Guid(String v) {
+    _failIfNotValidGuid(v);
     _value = v;
   }
 
@@ -39,7 +40,7 @@ class Guid {
 
   _failIfNotValidGuid(String? v) {
     if (v == null || v.isEmpty) {
-      v = null;
+      throw new FlutterGuidError("Value '$v' is not a valid UUID");
     }
     final isInvalid = isUUID(v) == false;
     if (isInvalid) {

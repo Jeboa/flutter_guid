@@ -13,15 +13,6 @@ void main() {
       expect(true, areEqual);
     });
 
-    test("Null values in testing don't throw exception", () {
-      final guidAlpha = new Guid("");
-      Guid? guidBeta;
-
-      final areEqual = guidAlpha == guidBeta;
-
-      expect(areEqual, false);
-    });
-
     test("Hashcodes for GUIDs with the same value should be the same", () {
       final guidAlpha = new Guid("ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9");
       final guidBeta = new Guid("ac3fa00f-8f5b-4e93-b7a5-2ee3051a12b9");
@@ -58,7 +49,7 @@ void main() {
   });
 
   group("Validity Tests", () {
-    _initializer(String? value, bool expectException) {
+    _initializer(String value, bool expectException) {
       if (expectException) {
         expect(() => new Guid(value), throwsA((e) {
           return e != null && e is FlutterGuidError;
@@ -66,7 +57,7 @@ void main() {
       } else {
         final guid = new Guid(value);
         final expectedValue =
-            (value == null || value.isEmpty) ? Guid.defaultValue.value : value;
+            (value.isEmpty) ? Guid.defaultValue.value : value;
         expect(guid.value, expectedValue);
         expect(guid.toString(), expectedValue);
       }
@@ -87,10 +78,6 @@ void main() {
 
     test("Valid Guid is allowed",
         () => _initializer("f841928c-5393-4c6e-9b22-85de1fcf317a", false));
-
-    test("Null is allowed", () => _initializer(null, false));
-
-    test("Empty string is allowed", () => _initializer("", false));
 
     test("Get newGuid works", () {
       final guid = Guid.newGuid;
